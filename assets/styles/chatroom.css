@@ -1,0 +1,262 @@
+/*
+ * Base structure
+ */
+
+/* Move down content because we have a fixed navbar that is 50px tall */
+body {
+  padding-top: 50px;
+}
+
+
+/*
+ * Global add-ons
+ */
+
+.yui-fix2bottom{
+    position: fixed;
+    top: 51px;
+    bottom: 0;
+    z-index: 1000;
+    overflow-x: hidden;
+    overflow-y: auto; /* Scrollable contents if viewport is shorter than content. */
+}
+textarea{resize:none;}
+
+/*
+ * Top navigation
+ * Hide default border to remove 1px line.
+ */
+.navbar-fixed-top {
+  border: 0;
+}
+
+/*
+ * Left sidebar
+ */
+
+/* Hide for mobile, show later */
+.yui-sidebar-left {
+  display: none;
+}
+@media (min-width: 768px) {
+  .yui-sidebar-left {
+    left: 0;
+    display: block;
+    padding: 1em 0px;
+    background-color: #f5f5f5;
+    border-right: 1px solid #eee;
+  }
+}
+
+/* fix bootstrap list-group mixed media */
+.list-group-item.media{ margin-top:0px; }
+
+/* Sidebar navigation */
+.nav-sidebar {
+  margin-right: -21px; /* 20px padding + 1px border */
+  margin-bottom: 20px;
+  margin-left: -20px;
+}
+.nav-sidebar > li > a {
+  padding-right: 20px;
+  padding-left: 20px;
+}
+.nav-sidebar > .active > a,
+.nav-sidebar > .active > a:hover,
+.nav-sidebar > .active > a:focus {
+  color: #fff;
+  background-color: #428bca;
+}
+
+
+/*
+ * Chat container
+ */
+
+/* container layout */
+.yui-chat-container {
+  padding:0;
+  min-height:400px;
+}
+@media (min-width: 768px) {
+.yui-chat-container {
+  }
+}
+
+.yui-chat-container>div{
+  position:absolute;
+  width:100%;
+}
+/*test*/
+.yui-testCenter{
+  background-color:coral;
+  position:absolute;
+  right:0;
+  left:0;
+}
+
+/* Chat nav */
+.yui-chat-navbox{
+  height:60px;
+  background-color:#eee;
+  border-bottom:1px solid #ccc;
+  z-index:2000;
+}
+
+.yui-chat-navbox>div{
+  display:table-cell;
+  vertical-align:middle;
+}
+.yui-chat-who{
+}
+.yui-chat-nav{
+}
+
+/* Chat messagebox */
+.yui-chat-messagebox{
+  top:60px;
+  bottom:70px;
+  overflow-x:hidden;
+  overflow-y:auto;
+}
+
+
+/* Chat Log */
+
+.yui-loading{
+  font-size:1.5em;
+  text-align:center;
+  background:aliceblue;
+  line-height:3.5em;
+}
+.yui-chat-log{
+  padding:0 1.5em 1.2em;
+}
+.yui-chat-log .media{
+  width:80%;
+}
+
+.yui-chat-others{
+  float:left;
+}
+.yui-chat-mine{
+  float:right;
+}
+.yui-chat-mine>.media-body{
+  text-align:right;
+}
+
+
+
+
+/* Chat textbox */
+
+.yui-chat-textbox{
+  bottom:0px;
+  padding:1.4em 1.2em 1.2em;
+  background:#ddd;
+}
+.yui-chat-textbox>textarea{
+  height:2.4em;
+  margin-top:0.3em;
+  resize:none;
+}
+
+
+/*
+ * Right area
+ */
+
+/* Hide for mobile, show later */
+.yui-sidebar-right{
+  display: none;
+}
+@media (min-width: 768px) {
+  .yui-sidebar-right{
+    right: 0;
+    display: block;
+    padding: 20px;
+    background-color: #f5f5f5;
+    border-left: 1px solid #eee;
+  }
+}
+
+/*
+ * Knowledge Answer Card
+ */
+
+.yui-knowlegde-list .list-group-item{
+  cursor:pointer;
+}
+.yui-knowlegde-list .list-group-item:hover{
+  background-color:#f5f5f5;
+}
+
+.badge.yui-add{
+  background-color:#aaa;
+  padding:3px 14px;
+}
+.yui-keywords{
+  padding-bottom:5px;
+}
+
+.yui-card-list .media{
+  border-radius:4px;
+  border:1px solid #ddd;
+  background-color:#fff;
+  color:#555;
+  box-shadow:0 1px 2px #0000001a;
+  padding:1em;
+  cursor:pointer;
+}
+.yui-card-list .media h4{
+  color:initial;
+}
+.yui-card-list .media:last-child{
+  margin-bottom:20px;
+}
+.yui-card-list .media:first-child{
+  margin-top:15px;
+}
+.yui-card-panel{
+}
+.yui-card-batch-import{
+  bottom:45px;
+  background-color:#eeeeee;
+  margin-top:15px;
+  border-radius:5px;
+  padding:1em;
+}
+.yui-card-batch-import>h4{
+  margin-top:0px;
+}
+.yui-card-batch-import>textarea{
+  margin-bottom:1em;
+  width:100%;
+}
+
+/*
+ * Setting Layout A
+ */
+
+@media (min-width: 768px) {
+  .container-fluid.yui-lytA {
+    width: 750px;
+  }
+}
+@media (min-width: 992px) {
+  .container-fluid.yui-lytA {
+    width: 970px;
+  }
+}
+@media (min-width: 1200px) {
+  .container-fluid.yui-lytA {
+    width: 1170px;
+  }
+}
+
+.yui-lytA{
+  padding:2em 0;
+}
+
+

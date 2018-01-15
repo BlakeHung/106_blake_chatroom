@@ -1,0 +1,110 @@
+<nav class="navbar navbar-inverse navbar-fixed-top">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <p class="navbar-text">Blake 聊天室服務</p>
+    </div>
+  </div>
+</nav>
+
+<div id="sis-chat-app" class="container-fluid">
+  <div class="row">
+    <!-- Left sidebar -->
+    <div class="col-sm-3 col-md-2 yui-fix2bottom yui-sidebar-left">
+      <div class="list-group" id="sis-channel-list">
+        <a v-for="(channel, index) in channelList" class="list-group-item media" v-bind:class="{ active: channel.isActive }" :data-chid="channel.channelId" v-on:click="openChannel( index )" href="#">
+          <div class="media-left">
+            <img alt="avatar-64x64" class="media-object" style="width: 64px; height: 64px;" :src="channel.avatarSrc" data-holder-rendered="true">
+          </div>
+          <div class="media-body">
+            <h4 class="list-group-item-heading">{{ channel.userName }}</h4>
+            <p class="list-group-item-text"> {{ channel.lastMessage }} </p>
+            <!--<span class="yui-left-sidebar-time">12:15</span>-->
+          </div>
+        </a>
+      </div>
+    </div>
+
+    <!-- chat area -->
+    <div class="col-sm-6 col-sm-offset-3 col-md-7 col-md-offset-2 yui-fix2bottom yui-chat-container">
+      <div class="yui-chat-navbox navbar">
+        <nav class="navbar navbar-default">
+          <div class="container-fluid">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+              <a class="navbar-brand" href="#">{{ channelList[activeIndex].userName }}</a>
+            </div>
+          </div><!-- /.container-fluid -->
+        </nav>
+      </div><!-- /.yui-chat-navbox -->
+      <!-- Chat area -->
+      <div class="yui-chat-messagebox" id="sis-chat-messagebox">
+
+        <div class="yui-chat-log clearfix" id="sis-chat-log">
+
+          <!--<div class="yui-loading">-->
+          <!--訊息載入中，請稍候-->
+          <!--</div>-->
+
+          <div v-for="(chatlog , index) in channelLogs" class="media"
+                                                        v-bind:class="[ (chatlog.sender===user) ? 'yui-chat-mine' : 'yui-chat-others' ]">
+            <div class="media-bottom media-left" v-if="(chatlog.sender !== user)">
+              <img alt="avatar-64x64" class="media-object" style="width: 64px; height: 64px;" src="/img/man.png" data-holder-rendered="true">
+            </div>
+
+            <div class="media-body">
+              <h4 class="media-heading"> {{ chatlog.sender.userName }} 說：</h4>
+              <p v-html="chatlog.message.text" ></p>
+              <!--{{ chatlog.message.text }}-->
+
+            </div>
+
+            <div class="media-bottom media-right" v-if="(chatlog.sender === user)">
+              <img alt="avatar-64x64" class="media-object" style="width: 64px; height: 64px;" src="/img/man.png" data-holder-rendered="true">
+            </div>
+          </div>
+
+        </div><!-- /.yui-chat-log -->
+      </div><!-- /.yui-chat-textbox -->
+
+      <div class="yui-chat-textbox">
+        <textarea class="form-control"
+                  v-model="newMsg"
+                  v-on:keyup.enter="sendNewMsg(newMsg)"
+                  placeholder="輸入訊息... ^_^">
+        </textarea>
+      </div>
+    </div><!-- /.yui-chat-container -->
+
+    <!-- Right sidebar -->
+    <div class="col-sm-3 col-md-3 yui-fix2bottom yui-sidebar-right">
+      <div>
+        <h4>線上用戶</h4>
+        <div class="yui-card-list" id="sis-user-knowledges">
+          <div v-for="(member, index) in userData" class="media" :data-chid="member.userId" v-on:click="openUserChannel( member )" href="#">
+            <div class="media-left">
+              <img alt="avatar-64x64" class="media-object" style="width: 64px; height: 64px;" src="/img/man.png" data-holder-rendered="true">
+            </div>
+            <div class="media-body">
+              <h4 class="media-heading">{{ member.userName}} <p v-if="(member.userId === user.userId)">(您)</p></h4>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div>
+        <h4>常用訊息</h4>
+        <div class="yui-card-list" id="sis-user-knowledges">
+          <div v-for="(knowledge, index) in knowledges" class="media" :data-chid="knowledge.id" v-on:click="insertThis( index )" href="#">
+            <div class="media-left">
+              <!--<img alt="avatar-64x64" class="media-object" data-src="holder.js/64x64" style="width: 64px; height: 64px;" data-holder-rendered="true" src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiIHN0YW5kYWxvbmU9InllcyI/PjxzdmcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB3aWR0aD0iNjQiIGhlaWdodD0iNjQiIHZpZXdCb3g9IjAgMCA2NCA2NCIgcHJlc2VydmVBc3BlY3RSYXRpbz0ibm9uZSI+PCEtLQpTb3VyY2UgVVJMOiBob2xkZXIuanMvNjR4NjQKQ3JlYXRlZCB3aXRoIEhvbGRlci5qcyAyLjYuMC4KTGVhcm4gbW9yZSBhdCBodHRwOi8vaG9sZGVyanMuY29tCihjKSAyMDEyLTIwMTUgSXZhbiBNYWxvcGluc2t5IC0gaHR0cDovL2ltc2t5LmNvCi0tPjxkZWZzPjxzdHlsZSB0eXBlPSJ0ZXh0L2NzcyI+PCFbQ0RBVEFbI2hvbGRlcl8xNTk3NDdmODc5ZiB0ZXh0IHsgZmlsbDojQUFBQUFBO2ZvbnQtd2VpZ2h0OmJvbGQ7Zm9udC1mYW1pbHk6QXJpYWwsIEhlbHZldGljYSwgT3BlbiBTYW5zLCBzYW5zLXNlcmlmLCBtb25vc3BhY2U7Zm9udC1zaXplOjEwcHQgfSBdXT48L3N0eWxlPjwvZGVmcz48ZyBpZD0iaG9sZGVyXzE1OTc0N2Y4NzlmIj48cmVjdCB3aWR0aD0iNjQiIGhlaWdodD0iNjQiIGZpbGw9IiNFRUVFRUUiLz48Zz48dGV4dCB4PSIxNC41IiB5PSIzNi4yIj42NHg2NDwvdGV4dD48L2c+PC9nPjwvc3ZnPg==">-->
+            </div>
+            <div class="media-body">
+              <h4 class="media-heading">{{ knowledge.title}}</h4>
+              <!--<span class=""><b> {{ knowledge.keywords }} </b></span>-->
+              <p class="list-group-item-text"> {{ knowledge.description }} </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
